@@ -57,6 +57,7 @@ class DoctrineMongoDBServiceProvider implements ServiceProviderInterface
         $app['doctrine.odm.mongodb.connection_options'] = array_replace(array(
             'database' => null,
             'host'     => null,
+            'options'  => array()
         ), $options);
 
         // default extension options
@@ -136,7 +137,7 @@ class DoctrineMongoDBServiceProvider implements ServiceProviderInterface
     public function loadDoctrineMongoDBConnection(Application $app)
     {
         $app['doctrine.mongodb.connection'] = $app->share(function () use ($app) {
-            return new Connection($app['doctrine.odm.mongodb.connection_options']['host']);
+            return new Connection($app['doctrine.odm.mongodb.connection_options']['host'], $app['doctrine.odm.mongodb.connection_options']['options']);
         });
     }
 
